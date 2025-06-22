@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { FaLinkedin, FaGithub, FaBars, FaTimes } from "react-icons/fa";
+import kaggleLogo from "../../assets/images/kaggle-logo.png";
 
 const HEADER_ID = "main-header";
 
@@ -246,7 +247,7 @@ const Header: React.FC = () => {
               >
                 <img
                   className="h-8 w-8"
-                  src="/kaggle-logo.png"
+                  src={kaggleLogo}
                   alt="Kaggle"
                   title="Kaggle"
                 />
