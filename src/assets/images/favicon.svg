@@ -1,0 +1,8 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="circle-clip">
+      <circle cx="100" cy="100" r="100" />
+    </clipPath>
+  </defs>
+  <image clip-path="url(#circle-clip)" href="profile.jpg" width="200" height="200" />
+</svg> 
