@@ -245,14 +245,10 @@ const Header: React.FC = () => {
                 className="block p-1 transition-all duration-200 ease-in-out hover:opacity-85 hover:scale-110"
               >
                 <img
-                  src="/kaggle-logo.svg"
+                  className="h-8 w-8"
+                  src="/kaggle-logo.png"
                   alt="Kaggle"
-                  style={{
-                    width: 22,
-                    height: 22,
-                    display: "inline-block",
-                    verticalAlign: "middle",
-                  }}
+                  title="Kaggle"
                 />
               </a>
             </div>
