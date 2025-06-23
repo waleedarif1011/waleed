@@ -20,8 +20,5 @@
     "@types/react-dom": "^19.1.6",
     "typescript": "~5.7.2",
     "vite": "^6.2.0"
-  },
-    "homepage": "https://waleedarif1011.github.io/WaleedTechJourney/",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+  }
 }
