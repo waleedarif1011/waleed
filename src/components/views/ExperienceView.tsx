@@ -2,74 +2,38 @@ import React from 'react';
 
 const experienceData = [
   {
-    companyName: 'Techanzy Limited',
-    title: 'Software Engineer - AI',
-    duration: 'May 2025 - Present',
-    description: 'Designed and optimized AI agents in Python, collaborating with teams to refine performance and meet requirements.',
-    achievements: [
-      'Designed and deployed AI agents using Python',
-      'Improved agent performance through testing and feedback',
-      'Collaborated with teams to define and gather requirements'
-    ],
-    skills: ['Python', 'Make.com', 'Vocera', 'FastAPI']
+    company: 'Techanzy Limited',
+    role: 'Software Engineer- AI',
+    period: 'May 2025 - Present',
+    description: 'Developing and testing diverse voice AI agents for seamless speech-to-text and text-to-speech conversion.',
+    tags: ['Python', 'Make.com', 'Vocera', 'FastAPI']
   },
   {
-    companyName: 'ALtaurux',
-    title: 'Associate Software Engineer',
-    duration: 'August 2024 - February 2025',
-    description: 'Developed multiple web applications and integrated machine learning models into applications.',
-    achievements: [
-      'Developed multiple web applications',
-      'Integrated machine learning models into applications',
-      'Collaborated with teams to gather requirements'
-    ],
-    skills: ['Python', 'JavaScript', 'React', 'FastAPI']
+    company: 'Altaurux',
+    role: 'Associate Software Engineer',
+    period: 'August 2024 - February 2025',
+    description: 'Developed multiple web apps and implemented AI models for diverse applications.',
+    tags: ['Python', 'JavaScript', 'NextJS', 'Deep Learning']
   },
   {
-    companyName: 'Speridian Technologies',
-    title: 'Software Engineer Intern',
-    duration: 'August 2023 - September 2023',
-    description: 'Developed and maintained full-stack web applications for various clients, focusing on scalability and user experience.',
-    achievements: [
-      'Developed multiple front-end apps according to user requirements',
-      'Created technical specifications and delivered timely solutions',
-      'Collaborated with stakeholders to gather requirements'
-    ],
-    skills: ['JavaScript', 'React', 'Node.js', 'MYSQL']
+    company: 'Speridian Technologies',
+    role: 'Software Engineer Intern',
+    period: 'August 2023 - September 2023',
+    description: 'Learned and implemented multiple web applications for various clients, focused on user requirements and user experience.',
+    tags: ['JavaScript', 'React', 'NextJS', 'MySQL']
   }
 ];
 
-const ExperienceCard = ({ experience }: { experience: typeof experienceData[0] }) => (
-  <div className="bg-gray-800 rounded-lg p-6 shadow-lg mb-8 w-full">
-    {/* Card Header: Company, Title, Duration */}
-    <div className="mb-4">
-      <h3 className="text-[#4B44D8] text-2xl font-bold mb-1">
-        {experience.companyName}
-      </h3>
-      <p className="text-gray-300 text-lg">
-        {experience.title} - {experience.duration}
-      </p>
-    </div>
-    {/* Main Description */}
-    <p className="text-gray-400 mb-4">
-      {experience.description}
-    </p>
-    {/* Achievements (if any) */}
-    {experience.achievements && experience.achievements.length > 0 && (
-      <ul className="list-disc list-inside text-gray-400 mb-4">
-        {experience.achievements.map((achievement, idx) => (
-          <li key={idx}>{achievement}</li>
-        ))}
-      </ul>
-    )}
-    {/* Skills/Technologies */}
+const JobCard = ({ job }: { job: typeof experienceData[0] }) => (
+  <div className="bg-[#1E3E62] backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg p-6 transform transition-transform duration-300 hover:shadow-2xl hover:border-indigo-500/50">
+    <p className="text-sm text-[#F4F6FF] mb-1">{job.period}</p>
+    <h3 className="text-xl font-bold text-[#F4F6FF]">{job.role}</h3>
+    <p className="text-md text-[#F4F6FF] mb-3">{job.company}</p>
+    <p className="text-[#F4F6FF] text-sm mb-4">{job.description}</p>
     <div className="flex flex-wrap gap-2">
-      {experience.skills.map((skill, idx) => (
-        <span
-          key={idx}
-          className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm"
-        >
-          {skill}
+      {job.tags.map(tag => (
+        <span key={tag} className="bg-[#FF6500] text-[#F4F6FF] text-xs font-semibold px-2.5 py-1 rounded-full">
+          {tag}
         </span>
       ))}
     </div>
@@ -78,12 +42,31 @@ const ExperienceCard = ({ experience }: { experience: typeof experienceData[0] }
 
 const ExperienceView: React.FC = () => {
   return (
-    <section id="experience-section" className="container mx-auto py-16 px-4">
-      <h2 className="text-center text-white text-4xl mb-12">EXPERIENCE</h2>
-      <div className="max-w-3xl mx-auto">
-        {experienceData.map((exp, index) => (
-          <ExperienceCard key={index} experience={exp} />
-        ))}
+    <section id="experience-section" className="py-16 md:py-24 bg-gray-950">
+      <div className="container mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-100">WORK EXPERIENCE</h2>
+        <div className="relative max-w-2xl mx-auto">
+          <div className="absolute left-1/2 w-0.5 h-full bg-slate-700 -translate-x-1/2"></div>
+          {experienceData.map((job, index) => {
+            const isLeft = index % 2 === 0;
+            return (
+              <div key={index} className="mb-8 flex justify-between items-center w-full">
+                {/* Left Card Slot */}
+                <div className={`w-1/2 ${isLeft ? 'pr-4' : ''}`}>
+                  {isLeft && <JobCard job={job} />}
+                </div>
+
+                {/* Right Card Slot */}
+                <div className={`w-1/2 ${!isLeft ? 'pl-4' : ''}`}>
+                  {!isLeft && <JobCard job={job} />}
+                </div>
+
+                {/* This is the timeline circle */}
+                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-indigo-500 rounded-full border-2 border-slate-600"></div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

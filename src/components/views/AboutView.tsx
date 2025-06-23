@@ -7,15 +7,15 @@ const AboutView: React.FC = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 text-gray-100">
           ABOUT ME
         </h2>
-        <div className="max-w-4xl mx-auto text-left text-lg text-white-1000 space-y-4">
+        <div className="max-w-4xl mx-auto text-left text-lg text-[#F4F6FF] space-y-4">
           <p>
-            Hello! I'm an <b>AI Engineer</b> with a strong foundation in software development and a specialization in machine learning. My passion lies in building intelligent applications that solve real-world problems and provide tangible value.
+            Hello! I'm an <b>AI Engineer</b>, who is curios for new emerging technologies and deep desire to make a positive impact on my community.. Currently I have a strong foundation in software development and a specialization in machine learning. What truly excites me is the opportunity to craft intelligent solutions that don’t just exist, but actively solve real-world challenges and deliver meaningful value to people’s lives.
           </p>
           <p>
-          As an AI Engineer, I’m fueled by the quiet thrill of turning complex problems into elegant systems—designing interfaces that feel natural, building reliable backends that hold everything together, and deploying models that make technology feel personal. For me, it’s not just about machines learning—it's about creating experiences that understand, adapt, and empower. That’s where the magic is.
+            With a background in AI and front-end technologies, I enjoy working across functional teams to learn from others. From designing intuitive user interfaces to integrating cutting-edge technologies to deploying scalable models. I am always eager to learn and grow, and I am excited to bring my skills and experience to the next level.
           </p>
           <p>
-            I am a lifelong learner, constantly exploring new technologies and methodologies.  Currently I am focused on deep learning, natural language processing, and their applications in creating smarter, more personalized user experiences. I'm super excited to play my role in <b>Artifical General Intelligence (AGI)</b> and in <b>Artifical Super Intelligence (ASI)</b>.
+            I am a lifelong learner, constantly exploring new technologies and methodologies to stay at the forefront of the rapidly evolving tech landscape. I am currently focused on deep learning & natural language processing to play my role in  <b>Artifical General Intelligence (AGI)</b> and in <b>Artificial Super Intelligence (ASI)</b>.
           </p>
         </div>
       </div>

@@ -1,200 +1,171 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { FaLinkedin, FaGithub, FaBars, FaTimes } from "react-icons/fa";
-import kaggleLogo from "../../assets/images/kaggle-logo.png";
+import React, { useState, useEffect, useCallback } from 'react';
+import { FaLinkedin, FaGithub, FaBars, FaTimes } from 'react-icons/fa';
+import { SiKaggle } from 'react-icons/si';
 
-const HEADER_ID = "main-header";
-
-const navLinks = [
-  { label: "Home", id: "#home-section" },
-  { label: "About", id: "#about-section" },
-  { label: "Expertise", id: "#expertise-section" },
-  { label: "Experience", id: "#experience-section" },
-  { label: "Projects", id: "#projects-section" },
-  { label: "Contact", id: "#contact-section" },
-];
+const HEADER_ID = "app-main-header";
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const navLinks = [
+    { id: "#home-section", label: "Home" },
+    { id: "#about-section", label: "About" },
+    { id: "#expertise-section", label: "Expertise" },
+    { id: "#experience-section", label: "Experience" },
+    { id: "#projects-section", label: "Projects" },
+    { id: "#contact-section", label: "Contact" },
+  ];
 
   const performScrollToHash = useCallback((hash: string) => {
-    const section = document.querySelector(hash);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!hash || hash === "#") { 
+        hash = "#home-section";
+    }
+    const targetElement = document.querySelector(hash);
+    const headerElement = document.getElementById(HEADER_ID);
+
+    if (targetElement && headerElement) {
+      const headerHeight = headerElement.offsetHeight;
+      const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - headerHeight;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    } else if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, []);
 
-  const handleSmoothScroll = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    sectionId: string
-  ) => {
+
+  const handleSmoothScroll = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     event.preventDefault();
-    setIsMobileMenuOpen(false);
     performScrollToHash(sectionId);
-    setTimeout(() => {
-      const event = new Event("scroll");
-      window.dispatchEvent(event);
-    }, 200);
+    
+    const targetHash = sectionId.startsWith('#') ? sectionId : `#${sectionId}`;
+
+    if (window.location.hash !== targetHash) {
+      const baseUrlWithoutHash = window.location.href.split('#')[0];
+      const newUrl = baseUrlWithoutHash + targetHash;
+      history.pushState(null, '', newUrl);
+    }
+
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
   };
 
   useEffect(() => {
-    let scrollTimeout: number | undefined;
+    const sectionElements = navLinks.map(link => document.querySelector(link.id)).filter(el => el !== null) as HTMLElement[];
+    const navLinkElements = document.querySelectorAll(`a[data-nav-link-id]`);
+    const headerElement = document.getElementById(HEADER_ID);
 
     const handleActiveLinkHighlighting = () => {
-      const headerElement = document.getElementById(HEADER_ID);
       if (!headerElement) return;
-
-      const navLinkElements = Array.from(
-        document.querySelectorAll("[data-nav-link-id]")
-      ) as HTMLElement[];
-      const sectionElements = navLinks
-        .map((link) => document.querySelector(link.id))
-        .filter(Boolean) as HTMLElement[];
-
       const headerHeight = headerElement.offsetHeight;
       const scrollY = window.scrollY;
       let currentActiveSectionId = "";
+      let minDistance = Infinity;
 
-      sectionElements.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-
-        const viewPortTopWithHeader = scrollY + headerHeight;
-
-        if (
-          viewPortTopWithHeader >= sectionTop - headerHeight * 0.2 &&
-          viewPortTopWithHeader <
-            sectionTop + sectionHeight - headerHeight * 0.2
-        ) {
-          currentActiveSectionId = "#" + section.id;
+      sectionElements.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top - headerHeight;
+        const distance = Math.abs(sectionTop);
+        if (distance < minDistance) {
+          minDistance = distance;
+          currentActiveSectionId = '#' + section.id;
         }
       });
 
-      // If at the very bottom of the page, set the last section as active
-      if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 2
-      ) {
-        const lastSection = sectionElements[sectionElements.length - 1];
-        if (lastSection) {
-          currentActiveSectionId = "#" + lastSection.id;
-        }
+      // Special check for the last section when scrolled to the bottom
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 2) {
+        currentActiveSectionId = navLinks[navLinks.length - 1].id;
       }
 
-      if (!currentActiveSectionId && sectionElements.length > 0) {
-        let closestSectionId = "#" + sectionElements[0].id;
-        let minDistance = Infinity;
-
-        sectionElements.forEach((section) => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.offsetHeight;
-          const distance = Math.abs(
-            scrollY + headerHeight - (sectionTop + sectionHeight / 3)
-          );
-
-          if (scrollY + headerHeight >= sectionTop - sectionHeight * 0.1) {
-            if (distance < minDistance) {
-              minDistance = distance;
-              closestSectionId = "#" + section.id;
-            }
-          }
-        });
-        currentActiveSectionId = closestSectionId;
-      }
-      if (
-        scrollY <
-        (sectionElements[0]?.offsetTop || 0) - headerHeight + 50
-      ) {
-        currentActiveSectionId = "#home-section";
-      }
-
-      navLinkElements.forEach((link) => {
-        link.classList.remove("nav-link-is-active");
-        if (
-          link.getAttribute("data-nav-link-id") === currentActiveSectionId
-        ) {
-          link.classList.add("nav-link-is-active");
+      navLinkElements.forEach(link => {
+        link.classList.remove('nav-link-is-active');
+        if (link.getAttribute('data-nav-link-id') === currentActiveSectionId) {
+          link.classList.add('nav-link-is-active');
         }
       });
 
-      if (
-        currentActiveSectionId &&
-        currentActiveSectionId !== "" &&
-        window.location.hash !== currentActiveSectionId
-      ) {
-        const baseUrlWithoutHash = window.location.href.split("#")[0];
+      if (currentActiveSectionId && currentActiveSectionId !== "" && window.location.hash !== currentActiveSectionId) {
+        const baseUrlWithoutHash = window.location.href.split('#')[0];
         const newUrl = baseUrlWithoutHash + currentActiveSectionId;
-        history.replaceState(null, "", newUrl);
+        history.replaceState(null, '', newUrl);
       }
     };
-
-    const throttledHandler = () => {
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
+    
+    let rafId: number | null = null;
+    const rafHandler = () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
       }
-      scrollTimeout = window.setTimeout(handleActiveLinkHighlighting, 150);
+      rafId = requestAnimationFrame(handleActiveLinkHighlighting);
     };
-
-    window.addEventListener("scroll", throttledHandler);
-    setTimeout(handleActiveLinkHighlighting, 100);
+    window.addEventListener('scroll', rafHandler);
+    handleActiveLinkHighlighting();
 
     return () => {
-      window.removeEventListener("scroll", throttledHandler);
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
+      window.removeEventListener('scroll', rafHandler);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
       }
     };
-  }, [navLinks, performScrollToHash]);
+  }, [navLinks, performScrollToHash]); 
+
 
   useEffect(() => {
     const handlePopState = () => {
       performScrollToHash(window.location.hash || "#home-section");
       setTimeout(() => {
-        const event = new Event("scroll");
-        window.dispatchEvent(event);
-      }, 150);
+          const event = new Event('scroll');
+          window.dispatchEvent(event);
+      }, 150); 
     };
 
     if (window.location.hash && window.location.hash !== "#") {
       setTimeout(() => {
-        performScrollToHash(window.location.hash);
-        setTimeout(() => {
-          const event = new Event("scroll");
-          window.dispatchEvent(event);
-        }, 200);
+          performScrollToHash(window.location.hash);
+          setTimeout(() => {
+            const event = new Event('scroll');
+            window.dispatchEvent(event);
+          }, 200); 
       }, 100);
     }
 
-    window.addEventListener("popstate", handlePopState);
+    window.addEventListener('popstate', handlePopState);
 
     return () => {
-      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener('popstate', handlePopState);
     };
   }, [performScrollToHash]);
 
-  const headerBaseClasses =
-    "h-14 shadow-md sticky top-0 z-[999] transition-colors duration-300";
-  const headerThemeClasses = "bg-gray-950/90 text-slate-100 backdrop-blur";
-  const portfolioTitleColor = "text-gray-100 hover:text-[#A9B4A8]";
-  const iconColorPropValue = "#E5E7EB";
-  const iconButtonBaseClasses =
-    "p-2 rounded-full focus:outline-none focus:ring-2 transition-all duration-200";
-  const iconButtonThemeSpecificClasses =
-    "hover:bg-gray-700/70 focus:ring-[#A9B4A8] focus:ring-offset-gray-950";
-  const mobileMenuBackground = "bg-gray-950/95 backdrop-blur-lg";
-  const navButtonBase = "rounded-full border border-[#A9B4A8] bg-transparent text-white px-4 py-0.5 text-sm font-medium transition-colors duration-200 focus:outline-none";
-  const navButtonHover = "hover:bg-[#232B3A] hover:text-white";
+
+  const headerBaseClasses = "h-14 shadow-md sticky top-0 z-50 transition-colors duration-300";
+  const headerThemeClasses = "bg-gray-950/90 backdrop-blur-lg text-slate-100"; // Lighter, glassy background
+
+  const portfolioTitleColor = "text-gray-100 hover:text-[#FF6500]"; // Updated accent hover
+  
+  const iconColorPropValue = "#E5E7EB"; // text-gray-200 equivalent
+
+  const iconButtonBaseClasses = "p-2 rounded-full focus:outline-none focus:ring-2 transition-all duration-200";
+  const iconButtonThemeSpecificClasses = 'hover:bg-gray-700/70 focus:ring-[#FF6500] focus:ring-offset-gray-950'; // Updated accent for ring
+
+  const mobileMenuBackground = "bg-gray-950/95 backdrop-blur-lg"; // Solid dark bg for mobile menu
+
+  const pillButtonBase = "rounded-full bg-slate-800/50 border border-slate-700 text-slate-300 transition-colors duration-300";
+  const pillButtonHover = "hover:bg-[#FF6500] hover:text-slate-100 hover:border-transparent";
 
   return (
     <>
-      <header
+      <header 
         id={HEADER_ID}
         className={`${headerBaseClasses} ${headerThemeClasses}`}
         aria-label="Application Header"
       >
         <div className="container mx-auto flex justify-between items-center w-full h-full px-4">
           <div className="text-xl font-bold tracking-tight">
-            <a
+            <a 
               href="#home-section"
               data-nav-link-id="#home-section"
               onClick={(e) => handleSmoothScroll(e, "#home-section")}
@@ -203,54 +174,37 @@ const Header: React.FC = () => {
               Waleed Arif
             </a>
           </div>
-
-          <nav className="hidden md:flex items-center md:space-x-2 lg:space-x-3">
+          
+          <nav className="hidden md:flex items-center md:space-x-1 lg:space-x-2">
             {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.id}
-                data-nav-link-id={link.id}
-                onClick={(e) => handleSmoothScroll(e, link.id)}
-                className={`${navButtonBase} ${navButtonHover}`}
-              >
-                {link.label}
-              </a>
-            ))}
+                <a
+                  key={link.label}
+                  href={link.id} 
+                  data-nav-link-id={link.id}
+                  onClick={(e) => handleSmoothScroll(e, link.id)}
+                  className={`${pillButtonBase} ${pillButtonHover} px-3 py-1 text-xs font-medium`}
+                >
+                  {link.label}
+                </a>
+              ))}
           </nav>
 
           <div className="flex items-center space-x-2">
             <div className="flex items-center space-x-2 md:space-x-3">
-              <a
-                href="https://www.linkedin.com/in/waleed1011"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn Profile"
-                className="block p-1 transition-all duration-200 ease-in-out hover:opacity-85 hover:scale-110"
-              >
-                <FaLinkedin size={22} color={iconColorPropValue} />
+              <a href="https://www.linkedin.com/in/waleed1011" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" className="block p-1 rounded-full transition-all duration-200 ease-in-out group bg-transparent">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200">
+                  <FaLinkedin size={22} className="text-gray-200 group-hover:text-[#0A66C2] transition-colors duration-200" />
+                </span>
               </a>
-              <a
-                href="https://github.com/waleedarif1011"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub Profile"
-                className="block p-1 transition-all duration-200 ease-in-out hover:opacity-85 hover:scale-110"
-              >
-                <FaGithub size={22} color={iconColorPropValue} />
+              <a href="https://github.com/waleedarif1011" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" className="block p-1 rounded-full transition-all duration-200 ease-in-out group bg-transparent">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200 bg-white group-hover:bg-black">
+                  <FaGithub size={22} className="text-black group-hover:text-white transition-colors duration-200" />
+                </span>
               </a>
-              <a
-                href="https://www.kaggle.com/waleedarif"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Kaggle Profile"
-                className="block p-1 transition-all duration-200 ease-in-out hover:opacity-85 hover:scale-110"
-              >
-                <img
-                  className="h-8 w-8"
-                  src={kaggleLogo}
-                  alt="Kaggle"
-                  title="Kaggle"
-                />
+              <a href="https://www.kaggle.com/waleedarif" target="_blank" rel="noopener noreferrer" aria-label="Kaggle Profile" className="block p-1 rounded-full transition-all duration-200 ease-in-out group bg-transparent">
+                <span className="flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200">
+                  <SiKaggle size={32} className="text-gray-200 group-hover:text-[#20BEFF] transition-colors duration-200" />
+                </span>
               </a>
             </div>
             <button
@@ -272,35 +226,47 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300 ease-in-out ${mobileMenuBackground} ${
-          isMobileMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        }`}
+        className={`md:hidden fixed inset-0 z-40 transition-opacity duration-300 ease-in-out ${mobileMenuBackground} ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       >
-        <nav
-          className={`flex flex-col items-center justify-center h-full space-y-4 px-4 pb-4 pt-20 sm:pt-24 transition-all duration-300 ease-in-out transform ${
-            isMobileMenuOpen
-              ? "translate-y-0 opacity-100"
-              : "-translate-y-5 opacity-0"
-          }`}
+        <nav 
+          className={`flex flex-col items-center justify-center h-full space-y-4 px-4 pb-4 pt-20 sm:pt-24 transition-all duration-300 ease-in-out transform ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-5 opacity-0'}`}
           aria-label="Mobile navigation"
         >
           {navLinks.map((link) => (
             <a
               key={`mobile-${link.label}`}
-              href={link.id}
+              href={link.id} 
               data-nav-link-id={link.id}
               onClick={(e) => handleSmoothScroll(e, link.id)}
-              className={`${navButtonBase} ${navButtonHover} w-full max-w-xs text-lg block text-center`}
+              className={`${pillButtonBase} ${pillButtonHover} px-5 py-3 text-lg font-medium block w-full max-w-xs mx-auto text-center`}
             >
               {link.label}
             </a>
           ))}
         </nav>
       </div>
+
+      <style>{`
+        nav .nav-link-is-active {
+          background-color: #FF6500 !important;
+          color: #fff !important;
+          border-color: #FF6500 !important;
+          font-weight: 600;
+        }
+        nav a:hover {
+          background-color: #FF6500 !important;
+          color: #fff !important;
+          border-color: #FF6500 !important;
+        }
+        .portfolio-logo.nav-link-is-active {
+          text-decoration: underline;
+          text-decoration-color: #FF6500 !important;
+          text-underline-offset: 6px;
+          text-decoration-thickness: 2px;
+        }
+      `}</style>
     </>
   );
 };
 
-export default Header;
+export default Header; 

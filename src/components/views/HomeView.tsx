@@ -17,14 +17,14 @@ const HomeView: React.FC = () => {
 
         {/* Introduction Text */}
         <div className="order-2 md:order-1 text-left">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-100 mb-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#F4F6FF] mb-2">
             Hi, I'm Waleed Arif
           </h1>
-          <h2 className="text-2xl md:text-3xl font-semibold text-[#4B44D8] mb-4">
+          <h2 className="text-2xl md:text-3xl font-semibold text-[#FF6500] mb-4">
             A Passionate Data Scientist
           </h2>
-          <p className="text-lg text-gray-300 max-w-xl">
-            I specialize in creating intelligent AI models and best software solutions. My expertise lies in machine learning, data science, and frontend development, with a keen interest in building optimized applications.
+          <p className="text-lg text-[#F4F6FF] max-w-xl">
+            I specialize in creating intelligent AI solutions. I engineer intelligent systems from raw data and build optimized software. My expertise lies in the power of machine learning and data science to see the unseen, with a keen to grow and to make a profound impact on the world.
           </p>
         </div>
         

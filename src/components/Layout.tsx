@@ -17,15 +17,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </main>
       <footer className="bg-slate-800 py-6 text-center">
         <p className="text-sm text-slate-400">
-          Copyright © {new Date().getFullYear()} &nbsp;
-          <a
-            href="https://www.linkedin.com/in/waleed1011"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-bold text-white hover:text-[#4B44D8] transition-colors"
-          >
-            Code by Waleed Arif
-          </a>
+          Copyright © {new Date().getFullYear()} <span className="mx-1">Waleed Tech Journey.</span>
+          <span className="ml-4">Developed by Waleed Arif</span>
         </p>
       </footer>
     </div>
