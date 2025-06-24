@@ -6,9 +6,9 @@ const ProjectsView: React.FC = () => {
   // Dummy data for projects
   const projects = [
     { name: 'StoryAI', description: 'An AI application which convert complex data science results into simple stories.', tags: ['Python', 'TensorFlow', 'Unsloth', 'Llama', 'Hugging Face'], githubUrl: 'https://github.com/waleedarif1011/StoryAI' },
-    { name: 'PoseMate', description: 'A AI application that helps users find and track their body pose.', tags: ['Python', 'OpenCV', 'Computer Vision', 'MediaPipe'], githubUrl: 'https://github.com/waleedarif1011/PoseMate' },
-    { name: 'Air-Quality-Prediction', description: 'An ML model to predict air quality based on weather and pollution data.', tags: ['Python', 'Exploratory Data Analysis (EDA)', 'Scikit-Learn', 'Random Forest'], githubUrl: 'https://github.com/waleedarif1011/Air-Quality-Prediction' },
-    { name: 'More Amazing Projects Coming!', description: 'Stay tuned for more exciting and passionate projects soon.', tags: ['Passion', 'Innovation', 'Coming Soon'] },
+    { name: 'PoseMate', description: 'An AI application that helps user to track their body pose while difficult workouts.', tags: ['Python', 'OpenCV', 'Computer Vision', 'MediaPipe'], githubUrl: 'https://github.com/waleedarif1011/PoseMate' },
+    { name: 'Air Quality Prediction', description: 'An ML model to predict air quality based on weather and pollution data.', tags: ['Python', 'Exploratory Data Analysis (EDA)', 'Scikit-Learn', 'Random Forest'], githubUrl: 'https://github.com/waleedarif1011/Air-Quality-Prediction' },
+    { name: 'Working on many more amazing ideas', description: 'Excited to solve real world problems through new emerging technologies', tags: [] },
   ];
 
   return (
