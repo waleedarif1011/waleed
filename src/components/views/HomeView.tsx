@@ -21,7 +21,7 @@ const HomeView: React.FC = () => {
             Hi, I'm Waleed Arif
           </h1>
           <h2 className="text-2xl md:text-3xl font-semibold text-[#FF6500] mb-4">
-            A Passionate Data Scientist
+            A Passionate AI Engineer
           </h2>
           <p className="text-lg text-[#F4F6FF] max-w-xl">
             I specialize in creating intelligent AI solutions. I engineer intelligent systems from raw data and build optimized software. My expertise lies in the power of machine learning and data science to see the unseen, with a keen to grow and to make a profound impact on the world.
