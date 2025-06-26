@@ -8,6 +8,7 @@ const ProjectsView: React.FC = () => {
     { name: 'StoryAI', description: 'An AI application which convert complex data science results into simple stories.', tags: ['Python', 'TensorFlow', 'Unsloth', 'Llama', 'Hugging Face'], githubUrl: 'https://github.com/waleedarif1011/StoryAI' },
     { name: 'PoseMate', description: 'An AI application that helps user to track their body pose while difficult workouts.', tags: ['Python', 'OpenCV', 'Computer Vision', 'MediaPipe'], githubUrl: 'https://github.com/waleedarif1011/PoseMate' },
     { name: 'Air Quality Prediction', description: 'An ML model to predict air quality based on weather and pollution data.', tags: ['Python', 'Exploratory Data Analysis (EDA)', 'Scikit-Learn', 'Random Forest'], githubUrl: 'https://github.com/waleedarif1011/Air-Quality-Prediction' },
+    { name: 'Taxi Data Rides', description: 'Analyzed taxi data for better understanding the taxi rides', tags: ['Python', 'Exploratory Data Analysis (EDA)', 'Numpy', 'Matplotlib'], githubUrl: 'https://github.com/waleedarif1011/Taxi_Rides' },
     { name: 'Working on many more amazing ideas', description: 'Excited to solve real world problems through new emerging technologies', tags: [] },
   ];
 

@@ -25,14 +25,15 @@ const experienceData = [
 ];
 
 const JobCard = ({ job }: { job: typeof experienceData[0] }) => (
-  <div className="bg-[#1E3E62] backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg p-6 transform transition-transform duration-300 hover:shadow-2xl hover:border-indigo-500/50">
-    <p className="text-sm text-[#F4F6FF] mb-1">{job.period}</p>
-    <h3 className="text-xl font-bold text-[#F4F6FF]">{job.role}</h3>
-    <p className="text-md text-[#F4F6FF] mb-3">{job.company}</p>
-    <p className="text-[#F4F6FF] text-sm mb-4">{job.description}</p>
+  <div className="bg-gradient-to-br from-[#223a5f] to-[#1E3E62] border border-slate-700 rounded-2xl shadow-2xl p-8 w-full max-w-3xl mx-auto mb-12 transform transition-transform duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-[0_10px_40px_10px_rgba(34,58,95,0.4)] hover:border-[#FF6500]/80 relative overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none rounded-2xl border-2 border-transparent hover:border-[#FF6500]/60 transition-all duration-300"></div>
+    <p className="text-sm text-[#F4F6FF] mb-1 opacity-80">{job.period}</p>
+    <h3 className="text-2xl font-extrabold text-[#F4F6FF] drop-shadow mb-1">{job.role}</h3>
+    <p className="text-lg text-[#FF6500] font-semibold mb-3">{job.company}</p>
+    <p className="text-[#F4F6FF] text-base mb-5 opacity-90">{job.description}</p>
     <div className="flex flex-wrap gap-2">
       {job.tags.map(tag => (
-        <span key={tag} className="bg-[#FF6500] text-[#F4F6FF] text-xs font-semibold px-2.5 py-1 rounded-full">
+        <span key={tag} className="bg-[#FF6500] text-[#F4F6FF] text-xs font-semibold px-3 py-1 rounded-full shadow">
           {tag}
         </span>
       ))}

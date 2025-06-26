@@ -63,7 +63,6 @@ const Header: React.FC = () => {
     const handleActiveLinkHighlighting = () => {
       if (!headerElement) return;
       const headerHeight = headerElement.offsetHeight;
-      const scrollY = window.scrollY;
       let currentActiveSectionId = "";
       let minDistance = Infinity;
 
