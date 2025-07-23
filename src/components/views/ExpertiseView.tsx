@@ -9,12 +9,6 @@ const expertiseData = [
     skills: ['Supervised & Unsupervised Learning', 'Deep Learning', 'NLP', 'Computer Vision']
   },
   {
-    icon: <FaCogs size={40} className="mx-auto text-[#FF6500]" />,
-    title: 'AI & Backend Systems',
-    description: 'Building robust backend services and APIs to power intelligent applications.',
-    skills: ['Python', 'FastAPI', 'Containerization (Docker)', 'CI/CD']
-  },
-  {
     icon: <FaChartBar size={40} className="mx-auto text-[#FF6500]" />,
     title: 'Data Science',
     description: 'Leveraging statistical analysis and machine learning to derive insights and drive decision-making.',
@@ -25,7 +19,14 @@ const expertiseData = [
     title: 'Frontend Development',
     description: 'Creating responsive and intuitive user interfaces for a seamless user experience.',
     skills: ['React', 'TypeScript', 'Tailwind CSS', 'State Management']
+  },
+  {
+    icon: <FaCogs size={40} className="mx-auto text-[#FF6500]" />,
+    title: 'AI & Backend Systems',
+    description: 'Building robust backend services and APIs to power intelligent applications.',
+    skills: ['Python', 'FastAPI', 'Containerization (Docker)', 'CI/CD']
   }
+  
 ];
 
 const ExpertiseView: React.FC = () => {

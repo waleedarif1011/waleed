@@ -12,7 +12,7 @@ const ContactView: React.FC = () => {
           href="mailto:waleedarif1011@gmail.com" 
           className="inline-block bg-[#FF6500] text-white font-semibold text-lg px-8 py-4 rounded-full transition-transform duration-300 hover:scale-105 hover:bg-opacity-90 shadow-lg"
         >
-          Say Hello by mail
+          Contact Me
         </a>
       </div>
     </section>

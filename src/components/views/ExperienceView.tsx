@@ -4,9 +4,9 @@ const experienceData = [
   {
     company: 'Techanzy Limited',
     role: 'Software Engineer- AI',
-    period: 'May 2025 - Present',
+    period: 'May 2025 - June 2025',
     description: 'Developing and testing diverse voice AI agents for seamless speech-to-text and text-to-speech conversion.',
-    tags: ['Python', 'Make.com', 'Vocera', 'FastAPI']
+    tags: ['Python', 'NLP', 'Vapi', 'Vocera', 'Make', 'FastAPI']
   },
   {
     company: 'Altaurux',
